@@ -1,69 +1,100 @@
-# React + TypeScript + Vite
+# 🧠 DAG Editor – Nexstem Frontend Intern Assignment
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A visual **Pipeline Editor** built using **React, TypeScript, and React Flow** that allows users to create and manage a **Directed Acyclic Graph (DAG)**. This editor simulates real-time data workflows using connected nodes with validation and layout capabilities.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🌐 Live Demo
 
-## Expanding the ESLint configuration
+🚀 [Click here to try it live](https://dag-editor-alpha.vercel.app/)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+🎥 **Screen Recording**:  https://drive.google.com/file/d/1q54ScRET6Ah1u4WZb2FWtB3sLK3Oce5f/view?usp=sharing 
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+🧩 Notes on Libraries & Decisions
+Library	Purpose
+React Flow	Enables graph-based UIs with drag-and-drop node/edge handling.
+Dagre	Handles automatic layout generation for DAGs (top-down, left-right).
+Vite	Fast and modern build tool for React projects.
+TypeScript	Enforces type safety and better developer tooling.
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+Why React Flow?
+React Flow was chosen for its simplicity in setting up interactive flow diagrams and built-in features like edge handles, validation hooks, and customization.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Why Dagre?
+Dagre was used to automatically calculate node positions in a way that maintains visual clarity, especially when complex graphs are involved.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+✨ Features
+🔘 Add Nodes via prompt-based input
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+🔗 Draw Edges between nodes with direction arrows
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+❌ Delete Nodes/Edges with Delete key
+
+🔄 Auto Layout nodes in a top-down structure
+
+✅ Real-time DAG Validation:
+
+Minimum of 2 nodes
+
+No self-loops
+
+All nodes must be connected
+
+No cyclic paths (DFS-based check)
+
+Valid edge directions only (source → target)
+
+🧾 JSON Preview Panel for debugging the graph structure
+
+⚙️ Challenges Faced
+🧠 DAG Validation Logic
+Implementing a custom validation function involved:
+
+DFS traversal to detect cycles
+
+Verifying all nodes are connected to at least one edge
+
+Preventing self-connections and incorrect edge directions
+
+Tracking source/target relations accurately
+
+⚔️ React Flow Connection Rules
+Preventing invalid edge creation like source-to-source or self-loops using React Flow’s onConnectStart and onConnectEnd hooks.
+
+Restricting connections using Handle types (source and target) and custom validation logic.
+
+🔁 Auto Layout with Dagre
+Translating React Flow’s graph structure to Dagre’s format for layout computation.
+
+Adjusting and updating node positions while keeping React Flow state consistent.
+
+Applying fitView() to center the graph after auto layout.
+
+💥 Vercel Build Failures
+TypeScript strict mode (verbatimModuleSyntax) caused unused import errors (React, dagre, useMemo).
+
+Fixed by removing unused imports and replacing some imports with import type.
+
+📚 References
+React Flow Documentation
+
+Dagre Layout Algorithm
+
+Cycle Detection in Graph (DFS)
+
+Vercel Docs – Deployment Guide
+
+TypeScript Docs
+
+👨‍💻 Developed By
+Sai Jagadeesh Tirupathi
+🎓 B.Tech CSE, Saveetha School of Engineering
+📍 Khammam, Telangana
+🔗 GitHub | LinkedIn
+
+📌 Notes
+This project was developed as part of the Frontend Intern Assignment for Nexstem and showcases my ability to handle graph visualization, validation logic, UI/UX, and deployment using modern frontend technologies.
+
+
+
+
